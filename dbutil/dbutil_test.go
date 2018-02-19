@@ -75,3 +75,21 @@ func (dc *DbutilSuite) Test4InsertUpdateDelete() {
 	assert.Equal(dc.T(), 1, resultCount, "Result should be 1")
 	assert.Equal(dc.T(), new_product_name, resultUpdated, "Result should be 1")
 }
+
+func (dc *DbutilSuite) Test5InsertDouble() {
+	dc.dbutil.DeleteAll()
+	id := fake.Digits()
+	product_name := fake.Product()
+	dc.dbutil.Insert(id, product_name)
+	err := dc.dbutil.Insert(id, product_name)
+	assert.NotNil(dc.T(), err, "err should not be Nil")
+	errorMessageExpected := "UNIQUE constraint failed: products.id"
+	assert.Equal(dc.T(), errorMessageExpected, err.Error(), "err should be equal to "+errorMessageExpected)
+	result := dc.dbutil.Select()
+	resultCount := dc.dbutil.SelectCount()
+	assert.NotNil(dc.T(), result, "Result should not be Nil")
+	assert.NotEqual(dc.T(), 0, resultCount, "Result should NOT be 0")
+	assert.Equal(dc.T(), 1, resultCount, "Result should be 1")
+	product_name_selected := dc.dbutil.SelectOne(id)
+	assert.Equal(dc.T(), product_name, product_name_selected, "Result should be equal to inserted value")
+}
