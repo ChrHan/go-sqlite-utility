@@ -22,6 +22,10 @@ func New(filename string) *Dbutil {
 // Prepare sets up database inside Dbutil, creates product table if not found
 func (d *Dbutil) Prepare() (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", fmt.Sprintf("./%s", d.Filename))
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
 	_, err = db.Query("select id, product_name from products")
 	if err != nil {
 		db.Exec("create table products (id int primary key, product_name varchar(20))")
