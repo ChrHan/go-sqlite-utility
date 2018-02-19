@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"strconv"
-
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/prometheus/log"
 )
@@ -21,7 +20,7 @@ func New(filename string) *Dbutil {
 
 func (d *Dbutil) Prepare() {
 	db, err := sql.Open("sqlite3", "./"+d.Filename)
-	rows, err := db.Query("select id, name from products")
+	_, err = db.Query("select id, name from products")
 	if err != nil {
 		db.Exec("create table products (id int primary key, product_name varchar(20))")
 	}
