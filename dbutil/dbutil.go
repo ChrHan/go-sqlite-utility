@@ -25,7 +25,6 @@ func (d *Dbutil) Prepare() {
 	if err != nil {
 		db.Exec("create table products (id int primary key, product_name varchar(20))")
 	}
-	fmt.Println(rows)
 }
 
 func (d *Dbutil) Select() *sql.Rows {
