@@ -29,7 +29,7 @@ func (dc *DbutilSuite) SetupSuite() {
 }
 
 func (dc *DbutilSuite) Test1Select() {
-	result := dc.dbutil.Select()
+	result, _ := dc.dbutil.Select()
 	resultCount := dc.dbutil.SelectCount()
 	assert.NotNil(dc.T(), result, "Result should not be Nil")
 	assert.Equal(dc.T(), 0, resultCount, "Result should be 0")
@@ -40,7 +40,7 @@ func (dc *DbutilSuite) Test2Insert() {
 	id := fake.Digits()
 	product_name := fake.Product()
 	dc.dbutil.Insert(id, product_name)
-	result := dc.dbutil.Select()
+	result, _ := dc.dbutil.Select()
 	resultCount := dc.dbutil.SelectCount()
 	assert.NotNil(dc.T(), result, "Result should not be Nil")
 	assert.NotEqual(dc.T(), 0, resultCount, "Result should NOT be 0")
@@ -55,7 +55,7 @@ func (dc *DbutilSuite) Test3InsertDelete() {
 	dc.dbutil.Insert(id, product_name)
 	dc.dbutil.Insert(fake.Digits(), fake.Product())
 	dc.dbutil.Delete(id)
-	result := dc.dbutil.Select()
+	result, _ := dc.dbutil.Select()
 	resultCount := dc.dbutil.SelectCount()
 	assert.NotNil(dc.T(), result, "Result should not be Nil")
 	assert.Equal(dc.T(), 1, resultCount, "Result should be 1")
@@ -68,7 +68,7 @@ func (dc *DbutilSuite) Test4InsertUpdateDelete() {
 	dc.dbutil.Insert(id, product_name)
 	new_product_name := fake.Product()
 	dc.dbutil.Update(id, new_product_name)
-	result := dc.dbutil.Select()
+	result, _ := dc.dbutil.Select()
 	resultCount := dc.dbutil.SelectCount()
 	resultUpdated := dc.dbutil.SelectOne(id)
 	assert.NotNil(dc.T(), result, "Result should not be Nil")
@@ -85,7 +85,7 @@ func (dc *DbutilSuite) Test5InsertDouble() {
 	assert.NotNil(dc.T(), err, "err should not be Nil")
 	errorMessageExpected := "UNIQUE constraint failed: products.id"
 	assert.Equal(dc.T(), errorMessageExpected, err.Error(), "err should be equal to "+errorMessageExpected)
-	result := dc.dbutil.Select()
+	result, err := dc.dbutil.Select()
 	resultCount := dc.dbutil.SelectCount()
 	assert.NotNil(dc.T(), result, "Result should not be Nil")
 	assert.NotEqual(dc.T(), 0, resultCount, "Result should NOT be 0")
