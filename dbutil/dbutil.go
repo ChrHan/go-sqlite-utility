@@ -33,20 +33,6 @@ func (d *Dbutil) Select() *sql.Rows {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
-	for rows.Next() {
-		var id int
-		var name string
-		err = rows.Scan(&id, &name)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println(id, name)
-	}
-	err = rows.Err()
-	if err != nil {
-		log.Fatal(err)
-	}
 	db.Close()
 	return rows
 }
