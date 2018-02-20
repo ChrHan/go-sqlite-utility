@@ -23,7 +23,7 @@ func New(filename string) *Dbutil {
 func (d *Dbutil) Prepare() (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", fmt.Sprintf("./%s", d.Filename))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return nil, err
 	}
 	_, err = db.Query("select id, product_name from products")
@@ -38,12 +38,12 @@ func (d *Dbutil) Prepare() (*sql.DB, error) {
 func (d *Dbutil) Select() (*sql.Rows, error) {
 	db, err := d.Prepare()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 		return nil, err
 	}
 	rows, err := db.Query("select id, product_name from products")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 		return nil, err
 	}
 	db.Close()
@@ -57,7 +57,7 @@ func (d *Dbutil) SelectCount() int {
 	var intResult int
 	err = db.QueryRow("select count(1) from products").Scan(&result)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	intResult, err = strconv.Atoi(result)
 	db.Close()
@@ -94,7 +94,7 @@ func (d *Dbutil) SelectOne(id string) string {
 	var result string
 	err = db.QueryRow(fmt.Sprintf("select product_name from products where id = %s", id)).Scan(&result)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	db.Close()
 	return result
