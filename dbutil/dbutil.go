@@ -3,8 +3,9 @@ package dbutil
 import (
 	"database/sql"
 	"fmt"
-	"github.com/prometheus/log"
 	"strconv"
+
+	"github.com/prometheus/log"
 )
 
 // Dbutil stores filename for SQLite3 database
@@ -29,7 +30,7 @@ func (d *Dbutil) Prepare() (*sql.DB, error) {
 	_, err = db.Query("select id, product_name from products")
 	if err != nil {
 		db.Exec("create table products (id int primary key, product_name varchar(20))")
-		return nil, nil
+		return nil, err
 	}
 	return db, nil
 }
@@ -43,7 +44,8 @@ func (d *Dbutil) Select() (*sql.Rows, error) {
 	}
 	rows, err := db.Query("select id, product_name from products")
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
+		d.Prepare()
 		return nil, err
 	}
 	db.Close()
