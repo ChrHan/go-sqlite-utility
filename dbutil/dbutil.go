@@ -29,7 +29,7 @@ func (d *Dbutil) Prepare() (*sql.DB, error) {
 	_, err = db.Query("select id, product_name from products")
 	if err != nil {
 		db.Exec("create table products (id int primary key, product_name varchar(20))")
-		return nil, err
+		return nil, nil
 	}
 	return db, nil
 }
