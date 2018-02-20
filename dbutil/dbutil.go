@@ -22,19 +22,13 @@ func New(filename string) *Dbutil {
 // Prepare sets up database inside Dbutil, creates product table if not found
 func (d *Dbutil) Prepare() (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", fmt.Sprintf("./%s", d.Filename))
-	log.Println("Prepare #-2")
 	if err != nil {
-		log.Println("Prepare #-1")
 		log.Println(err.Error())
 		return nil, err
 	}
-	log.Println("Prepare #0")
 	_, err = db.Query("select id, product_name from products")
-	log.Println("Prepare #1")
 	if err != nil {
-		log.Println("Prepare #2")
 		db.Exec("create table products (id int primary key, product_name varchar(20))")
-		log.Println("Prepare #3")
 		return nil, nil
 	}
 	return db, nil
@@ -42,13 +36,9 @@ func (d *Dbutil) Prepare() (*sql.DB, error) {
 
 // Select performs `select * from products` and returns *sql.Rows
 func (d *Dbutil) Select() (*sql.Rows, error) {
-	log.Println("Select #-2 - util")
 	db, err := d.Prepare()
-	log.Println("Select #-1 - util")
 	if err != nil {
-		log.Println("Select #0")
 		log.Println(err.Error())
-		log.Println("Select #1")
 		return nil, err
 	}
 	rows, err := db.Query("select id, product_name from products")
