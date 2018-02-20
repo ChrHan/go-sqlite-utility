@@ -22,7 +22,9 @@ func New(filename string) *Dbutil {
 // Prepare sets up database inside Dbutil, creates product table if not found
 func (d *Dbutil) Prepare() (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", fmt.Sprintf("./%s", d.Filename))
+	fmt.Println("Prepare #-2")
 	if err != nil {
+		fmt.Println("Prepare #-1")
 		log.Println(err)
 		return nil, err
 	}
