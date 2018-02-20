@@ -25,11 +25,9 @@ func TestDbutil2Suite(t *testing.T) {
 func (dc *Dbutil2Suite) SetupSuite() {
 	os.Remove(DB_FILENAME2)
 	dc.dbutil = db.New(DB_FILENAME2)
-	fmt.Println("Executing SetupSuite")
 }
 
 func (dc *Dbutil2Suite) Test1SelectNoPrepare() {
-	//	dc.dbutil = db.New(DB_FILENAME2)
 	result, err := dc.dbutil.Select()
 	if err != nil {
 		log.Println(err.Error())
