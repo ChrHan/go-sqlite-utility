@@ -42,7 +42,9 @@ func (d *Dbutil) Prepare() (*sql.DB, error) {
 
 // Select performs `select * from products` and returns *sql.Rows
 func (d *Dbutil) Select() (*sql.Rows, error) {
+	log.Println("Select #-2 - util")
 	db, err := d.Prepare()
+	log.Println("Select #-1 - util")
 	if err != nil {
 		log.Println("Select #0")
 		log.Println(err.Error())
