@@ -22,19 +22,19 @@ func New(filename string) *Dbutil {
 // Prepare sets up database inside Dbutil, creates product table if not found
 func (d *Dbutil) Prepare() (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", fmt.Sprintf("./%s", d.Filename))
-	fmt.Println("Prepare #-2")
+	log.Println("Prepare #-2")
 	if err != nil {
-		fmt.Println("Prepare #-1")
-		log.Println(err)
+		log.Println("Prepare #-1")
+		log.Println(err.Error())
 		return nil, err
 	}
-	fmt.Println("Prepare #0")
+	log.Println("Prepare #0")
 	_, err = db.Query("select id, product_name from products")
-	fmt.Println("Prepare #1")
+	log.Println("Prepare #1")
 	if err != nil {
-		fmt.Println("Prepare #2")
+		log.Println("Prepare #2")
 		db.Exec("create table products (id int primary key, product_name varchar(20))")
-		fmt.Println("Prepare #3")
+		log.Println("Prepare #3")
 		return nil, nil
 	}
 	return db, nil
@@ -44,9 +44,9 @@ func (d *Dbutil) Prepare() (*sql.DB, error) {
 func (d *Dbutil) Select() (*sql.Rows, error) {
 	db, err := d.Prepare()
 	if err != nil {
-		fmt.Println("Select #0")
-		log.Println(err)
-		fmt.Println("Select #1")
+		log.Println("Select #0")
+		log.Println(err.Error())
+		log.Println("Select #1")
 		return nil, err
 	}
 	rows, err := db.Query("select id, product_name from products")
