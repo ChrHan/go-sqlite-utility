@@ -1,14 +1,14 @@
 package dbutil_test
 
 import (
-	"fmt"
+	"log"
+	"os"
+	"testing"
+
 	db "github.com/ChrHan/go-sqlite-utility/dbutil"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
-	"log"
-	"os"
-	"testing"
 )
 
 const DB_FILENAME2 = "test2.db"
